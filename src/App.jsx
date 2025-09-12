@@ -163,7 +163,7 @@ function TiltCard({ name, desc, badge, gradient }) {
       <p className="mt-2 max-w-[28ch] text-slate-600 dark:text-slate-400" style={{ transform: "translateZ(60px)" }}>{desc}</p>
       {/* Bouton "Voir" centré + lien local placeholder */}
       <div className="absolute bottom-4 inset-x-0 flex justify-center" style={{ transform: "translateZ(70px)" }}>
-        <RippleButtonLink href="./a-remplacer.pdf">Voir</RippleButtonLink>
+        <RippleButtonLink href="./portfolio/a-remplacer.pdf">Voir</RippleButtonLink>
       </div>
     </div>
   );
@@ -209,11 +209,11 @@ function Skills() {
   ];
 
   const rows = [
-    { title: "audit du patrimoine informatique", href: "/pdfs/Preuve_1.pdf", gpi: true,  incidents: false, presence: false, projet: false, service: false, devpro: false }, // (1-1)
-    { title: "audit et optimisation du maillage interne d’un site", href: "/pdfs/Preuve_3.pdf", gpi: false, incidents: false, presence: true,  projet: false, service: false, devpro: false }, // (2-3)
-    { title: "chefferie de projet chez tactee", href: "/pdfs/Preuve_4.pdf", gpi: false, incidents: false, presence: false, projet: true,  service: false, devpro: false }, // (3-4)
-    { title: "déploiement d’un agent ia vocal", href: "/pdfs/Preuve_5.pdf", gpi: false, incidents: false, presence: false, projet: false, service: true,  devpro: false }, // (4-5)
-    { title: "créer et organiser son développement professionnel", href: "/pdfs/Preuve_6.pdf", gpi: false, incidents: false, presence: false, projet: false, service: false, devpro: true  }, // (5-6)
+    { title: "audit du patrimoine informatique", href: "/portfolio/pdfs/Preuve_1.pdf", gpi: true,  incidents: false, presence: false, projet: false, service: false, devpro: false }, // (1-1)
+    { title: "audit et optimisation du maillage interne d’un site", href: "/portfolio/pdfs/Preuve_3.pdf", gpi: false, incidents: false, presence: true,  projet: false, service: false, devpro: false }, // (2-3)
+    { title: "chefferie de projet chez tactee", href: "/portfolio/pdfs/Preuve_4.pdf", gpi: false, incidents: false, presence: false, projet: true,  service: false, devpro: false }, // (3-4)
+    { title: "déploiement d’un agent ia vocal", href: "/portfolio/pdfs/Preuve_5.pdf", gpi: false, incidents: false, presence: false, projet: false, service: true,  devpro: false }, // (4-5)
+    { title: "créer et organiser son développement professionnel", href: "/portfolio/pdfs/Preuve_6.pdf", gpi: false, incidents: false, presence: false, projet: false, service: false, devpro: true  }, // (5-6)
   ];
 
   const Cell = ({ ok }) => (
@@ -257,7 +257,7 @@ function Skills() {
         </table>
       </div>
       <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">Clique sur une réalisation pour ouvrir le PDF (liens placeholders, à remplacer).</p>
-      <a href="/pdfs/tableau.pdf" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-sm font-medium text-sky-600 underline-offset-2 hover:underline">
+      <a href="/portfolio/pdfs/tableau.pdf" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-sm font-medium text-sky-600 underline-offset-2 hover:underline">
         Voir le tableau
       </a>
     </section>

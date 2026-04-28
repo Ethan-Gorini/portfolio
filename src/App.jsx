@@ -16,7 +16,6 @@ export default function App() {
       <Header />
       <main className="relative">
         <Hero />
-        <Projects />
         <Skills />
         <Experience />
         <Certifications />
@@ -53,7 +52,6 @@ function Header() {
           <span className="font-semibold tracking-wide">Ethan Gorini</span>
         </a>
         <nav className="hidden items-center gap-4 md:flex">
-          <a className="text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" href="#projets">Projets</a>
           <a className="text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" href="#competences">Compétences</a>
           <a className="text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" href="#experience">Expérience</a>
           <a className="text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" href="#certifs">Certifications</a>
@@ -73,24 +71,37 @@ function Header() {
 /* ─────────────────────────────── Hero */
 function Hero() {
   return (
-    <section id="accueil" className="relative mx-auto flex min-h-[70vh] max-w-6xl items-center px-4 py-20">
+    <section id="accueil" className="relative mx-auto flex max-w-6xl items-center px-4 py-16">
       <MorphingBlob />
-      <div className="relative z-10 max-w-2xl">
+      <div className="relative z-10 max-w-4xl">
         <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, ease: "easeOut" }} className="text-4xl font-bold leading-tight tracking-tight md:text-6xl">
           Ethan <span className="bg-gradient-to-r from-fuchsia-400 to-sky-400 bg-clip-text text-transparent">Gorini</span>
         </motion.h1>
-        <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }} className="mt-4 max-w-xl text-slate-600 dark:text-slate-300">
-          Étudiant <strong>BTS SIO</strong> — <span className="text-slate-800 dark:text-slate-200">recherche de stage</span>. Intéressé par les systèmes, réseaux, cybersécurité et dev web.
-          Basé à <span className="text-slate-800 dark:text-slate-200">Lyon</span>. Permis B.
+        <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }} className="mt-4 max-w-xl text-justify text-slate-600 dark:text-slate-300">
+          Étudiant en BTS SIO option SISR et futur étudiant en cycle ingénieur ICS à CPE Lyon, je construis mon profil autour des systèmes, des réseaux, des infrastructures, de la cybersécurité et du DevOps. Curieux, rigoureux et polyvalent, je souhaite développer une vision complète des environnements informatiques, de leur mise en place à leur sécurisation. Basé à Lyon, titulaire du permis B.
         </motion.p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <MagneticButton intent="primary" onClick={() => (window.location.href = "mailto:e.gorini@eleve.leschartreux.net")}>
             e.gorini@eleve.leschartreux.net
           </MagneticButton>
           <MagneticButton intent="ghost" onClick={() => (window.location.href = "tel:+33769835778")}>
             07 69 83 57 78
           </MagneticButton>
-          <MagneticButton>Basé à Lyon 1er</MagneticButton>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=38%20rue%20Pierre%20Dupont%2C%20Lyon%2069001"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative inline-flex items-center justify-center overflow-hidden rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200 dark:bg-slate-800/60 dark:text-white dark:hover:bg-slate-700/60"
+          >
+            Basé à Lyon 1er
+          </a>
+          <a
+            href="/portfolio/pdfs/CV.pdf"
+            download
+            className="relative inline-flex items-center justify-center overflow-hidden rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200 dark:bg-slate-800/60 dark:text-white dark:hover:bg-slate-700/60"
+          >
+            Télécharger mon CV
+          </a>
         </div>
       </div>
     </section>
@@ -127,76 +138,6 @@ function MagneticButton({ children, intent = "secondary", onClick }) {
   );
 }
 
-/* ─────────────────────────────── Projets */
-function Projects() {
-  const projects = [
-    { name: "Projet exemple — Titre", desc: "Courte description d'exemple du projet (techno, objectif, résultat).", badge: "Exemple", gradient: "from-indigo-400 to-sky-400" },
-  ];
-  return (
-    <section id="projets" className="mx-auto max-w-6xl px-4 py-24">
-      <h2 className="mb-8 text-2xl font-semibold tracking-tight md:text-3xl">Projets</h2>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((p, i) => (
-          <TiltCard key={i} {...p} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function TiltCard({ name, desc, badge, gradient }) {
-  const ref = useRef(null);
-  const [t, setT] = useState({ x: 0, y: 0 });
-  const reset = () => setT({ x: 0, y: 0 });
-  const onMove = (e) => {
-    const el = ref.current; if (!el) return; const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width; const py = (e.clientY - r.top) / r.height;
-    const x = (py - 0.5) * -10; const y = (px - 0.5) * 10; setT({ x, y });
-  };
-  return (
-    <div ref={ref} onPointerMove={onMove} onPointerLeave={reset} className="group relative h-72 cursor-pointer rounded-3xl border border-slate-200 bg-white/60 p-5 shadow-xl shadow-black/5 transition dark:border-white/10 dark:bg-slate-900/50 dark:shadow-black/20" style={{ transformStyle: "preserve-3d", transform: `perspective(900px) rotateX(${t.x}deg) rotateY(${t.y}deg)`, transition: "transform 150ms ease-out" }}>
-      <div className={`absolute inset-0 -z-0 rounded-3xl bg-gradient-to-br ${gradient} opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30`} />
-      <span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1 text-xs text-slate-600 backdrop-blur dark:bg-white/10 dark:text-slate-300" style={{ transform: "translateZ(40px)" }}>
-        <span className="h-2 w-2 rounded-full bg-slate-400 dark:bg-white/60" /> {badge}
-      </span>
-      <h3 className="mt-5 text-xl font-semibold" style={{ transform: "translateZ(50px)" }}>{name}</h3>
-      <p className="mt-2 max-w-[28ch] text-slate-600 dark:text-slate-400" style={{ transform: "translateZ(60px)" }}>{desc}</p>
-      {/* Bouton "Voir" centré + lien local placeholder */}
-      <div className="absolute bottom-4 inset-x-0 flex justify-center" style={{ transform: "translateZ(70px)" }}>
-        <RippleButtonLink href="./portfolio/a-remplacer.pdf">Voir</RippleButtonLink>
-      </div>
-    </div>
-  );
-}
-
-/* RippleButtonLink : même look/effet que RippleButton, mais rend un <a> qui peut ouvrir un fichier local */
-function RippleButtonLink({ children, href, target }) {
-  const ref = useRef(null);
-  const [ripples, setRipples] = useState([]);
-  useEffect(() => { if (!ripples.length) return; const t = setTimeout(() => setRipples((r) => r.slice(1)), 500); return () => clearTimeout(t); }, [ripples]);
-  const onClick = (e) => {
-    const el = ref.current; const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-    setRipples((r) => [...r, { x, y }]);
-    if (href) setTimeout(() => {
-      if (target === "_blank") window.open(href, "_blank", "noopener,noreferrer");
-      else window.location.href = href;
-    }, 120);
-    e.preventDefault();
-  };
-  return (
-    <a href={href || "#"} target={target} ref={ref} onClick={onClick} className="relative inline-block overflow-hidden rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-black/10 transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-white/90">
-      {children}
-      <span className="pointer-events-none absolute inset-0">
-        {ripples.map((r, i) => (
-          <span key={i} className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/20 blur-[2px] dark:bg-slate-900/20" style={{ left: r.x, top: r.y, animation: "ripple 500ms ease-out forwards" }} />
-        ))}
-      </span>
-      <style>{`@keyframes ripple { from { transform: translate(-50%, -50%) scale(1); opacity: 0.5; } to { transform: translate(-50%, -50%) scale(35); opacity: 0; } }`}</style>
-    </a>
-  );
-}
-
 /* ─────────────────────────────── Compétences (tableau) */
 function Skills() {
   const headers = [
@@ -210,6 +151,7 @@ function Skills() {
 
   const rows = [
     { title: "audit du patrimoine informatique", href: "/portfolio/pdfs/Preuve_1.pdf", gpi: true,  incidents: false, presence: false, projet: false, service: false, devpro: false }, // (1-1)
+    { title: "Prise en charge d'incidents et traitement de demandes d'évolution sur poste de travail", href: "/portfolio/pdfs/Preuve_2.pdf", gpi: false, incidents: true,  presence: false, projet: false, service: false, devpro: false }, // (2-2)
     { title: "audit et optimisation du maillage interne d’un site", href: "/portfolio/pdfs/Preuve_3.pdf", gpi: false, incidents: false, presence: true,  projet: false, service: false, devpro: false }, // (2-3)
     { title: "chefferie de projet chez tactee", href: "/portfolio/pdfs/Preuve_4.pdf", gpi: false, incidents: false, presence: false, projet: true,  service: false, devpro: false }, // (3-4)
     { title: "déploiement d’un agent ia vocal", href: "/portfolio/pdfs/Preuve_5.pdf", gpi: false, incidents: false, presence: false, projet: false, service: true,  devpro: false }, // (4-5)
@@ -227,7 +169,7 @@ function Skills() {
   );
 
   return (
-    <section id="competences" className="mx-auto max-w-6xl px-4 py-24">
+    <section id="competences" className="mx-auto max-w-6xl px-4 py-14">
       <h2 className="mb-8 text-2xl font-semibold tracking-tight md:text-3xl">Compétences</h2>
       <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white/70 shadow-black/5 dark:border-white/10 dark:bg-slate-900/40">
         <table className="min-w-[1000px] w-full text-sm">
@@ -256,9 +198,9 @@ function Skills() {
           </tbody>
         </table>
       </div>
-      <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">Clique sur une réalisation pour ouvrir le PDF (liens placeholders, à remplacer).</p>
+      <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">Cliquez sur une réalisation pour ouvrir le PDF.</p>
       <a href="/portfolio/pdfs/tableau.pdf" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-sm font-medium text-sky-600 underline-offset-2 hover:underline">
-        Voir le tableau
+        Voir le tableau officiel
       </a>
     </section>
   );
@@ -267,15 +209,16 @@ function Skills() {
 /* ─────────────────────────────── Expérience & Éducation */
 function Experience() {
   const blocks = [
-    { title: "Stage — Agence Tactee", sub: "Lyon", when: "Juin - juillet 2025", details: "Audits SEO, SEA, Chefferie de projet." },
-    { title: "Intérim - RAS", sub: "Aix-en-Provence", when: "Juillet 2025", details: "Aide chauffeur" },
-    { title: "Equipier commercial - Métro", sub: "Venelles", when: "Juillet - Aout 2025", details: "Mise en rayon, réassort, gestion des stocks, contrôle des dates, accueil et conseil clients." },
+    { title: "Stage - PC Réparation", sub: "Lyon", when: "", details: "Diagnostic, réparation et évolution de postes informatiques." },
     { title: "Manutention - Indépendant", sub: "Aix-en-Provence", when: "Aout 2025", details: "Rénovation" },
+    { title: "Equipier commercial - Métro", sub: "Venelles", when: "Juillet - Aout 2025", details: "Mise en rayon, réassort, gestion des stocks, contrôle des dates, accueil et conseil clients." },
+    { title: "Intérim - RAS", sub: "Aix-en-Provence", when: "Juillet 2025", details: "Aide chauffeur" },
+    { title: "Stage - Agence Tactee", sub: "Lyon", when: "Juin - juillet 2025", details: "Audits SEO, SEA, Chefferie de projet." },
 
-    { title: "Intérim — Manutention", sub: "InterimNation, Aix-en-Provence", when: "2023 – 2024", details: "Missions logistiques et polyvalence." },
-    { title: "Laveur de vitres (Indépendant)", sub: "Aix-en-Provence", when: "2022 – 2023", details: "Prestations chez particuliers et pros." },
-    { title: "Garde d'enfants (Indépendant)", sub: "Aix-en-Provence", when: "2021 – 2023", details: "Responsable et ponctuel." },
-    { title: "Stage — Cybercafé NextG", sub: "Aix-en-Provence", when: "Fév. – Mars 2020", details: "Affiches et support logiciel de gestion de postes." },
+    { title: "Intérim - Manutention", sub: "InterimNation, Aix-en-Provence", when: "2023 – 2024", details: "Missions logistiques et polyvalence." },
+    { title: "Laveur de vitres - Indépendant", sub: "Aix-en-Provence", when: "2022 – 2023", details: "Prestations chez particuliers et pros." },
+    { title: "Garde d'enfants - Indépendant", sub: "Aix-en-Provence", when: "2021 – 2023", details: "Responsable et ponctuel." },
+    { title: "Stage - Cybercafé NextG", sub: "Aix-en-Provence", when: "Fév. – Mars 2020", details: "Affiches et support logiciel de gestion de postes." },
   ];
   const studies = [
     { title: "BTS SIO", sub: "Institution des Chartreux, Lyon", when: "2024 – 2025 (en cours)", details: "Parcours SISR/SLAM, projets réseau & web." },
@@ -283,7 +226,7 @@ function Experience() {
     { title: "Baccalauréat général (mention)", sub: "Lycée Vauvenargues, Aix-en-Provence", when: "2022 – 2023", details: "Spécialités Mathématiques, NSI." },
   ];
   return (
-    <section id="experience" className="mx-auto max-w-6xl px-4 py-24">
+    <section id="experience" className="mx-auto max-w-6xl px-4 py-14">
       <h2 className="mb-8 text-2xl font-semibold tracking-tight md:text-3xl">Expérience</h2>
       <Timeline items={blocks} />
       <h3 className="mb-4 mt-12 text-xl font-semibold">Éducation</h3>
@@ -323,6 +266,7 @@ function Certifications() {
     { title: "Getting Started in Cybersecurity 2.0", href: "https://www.credly.com/badges/4d2855f0-cdc7-4646-aa94-511394781f17" },
     { title: "Introduction to the Threat Landscape 2.0", href: "https://www.credly.com/badges/6b2617f3-daa6-418a-84f3-7a068c646e4a" },
     { title: "Technical Introduction to Cybersecurity 1.0", href: "https://www.credly.com/badges/174e74fa-4393-4196-a3fd-f1c22c5da452" },
+    { title: "CSNA - Certified Stormshield Network Administrator", href: "#" },
   ];
 
   const openLink = (url) => window.open(url, "_blank", "noopener,noreferrer");
@@ -334,7 +278,7 @@ function Certifications() {
   const handleKey = (href) => (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLink(href); } };
 
   return (
-    <section id="certifs" className="mx-auto max-w-6xl px-4 py-24">
+    <section id="certifs" className="mx-auto max-w-6xl px-4 py-14">
       <h2 className="mb-8 text-2xl font-semibold tracking-tight md:text-3xl">Certifications</h2>
       <ul className="grid gap-3 sm:grid-cols-2">
         {certs.map((c, idx) => (
@@ -375,11 +319,11 @@ function Certifications() {
 /* ─────────────────────────────── Contact */
 function ContactCTA() {
   return (
-    <section id="contact" className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-100/80 px-6 py-16 dark:border-white/10 dark:bg-slate-900/60">
+    <section id="contact" className="relative mx-auto my-14 max-w-6xl overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-100/80 px-6 py-14 dark:border-white/10 dark:bg-slate-900/60">
       <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-fuchsia-400/20 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 -bottom-24 h-72 w-72 rounded-full bg-sky-400/20 blur-3xl" />
       <div className="relative">
-        <h2 className="text-2xl font-semibold md:text-3xl">Disponible pour un stage</h2>
+        <h2 className="text-2xl font-semibold md:text-3xl">Restons en contact</h2>
         
         <div className="mt-6 flex flex-wrap gap-3">
           <MagneticButton intent="primary" onClick={() => (window.location.href = "mailto:e.gorini@eleve.leschartreux.net")}>
@@ -391,6 +335,13 @@ function ContactCTA() {
           <MagneticButton onClick={() => (window.location.href = "#accueil")}>
             Lyon, 69001 — France
           </MagneticButton>
+          <a
+            href="/portfolio/pdfs/CV.pdf"
+            download
+            className="relative inline-flex items-center justify-center overflow-hidden rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200 dark:bg-slate-800/60 dark:text-white dark:hover:bg-slate-700/60"
+          >
+            Télécharger mon CV
+          </a>
         </div>
       </div>
     </section>
@@ -399,8 +350,8 @@ function ContactCTA() {
 
 function Footer() {
   return (
-    <footer className="mx-auto mt-24 max-w-6xl px-4 pb-16 text-slate-500 dark:text-slate-400">
-      <p className="text-xs">© 2025 — Portfolio d'Ethan Gorini.</p>
+    <footer className="mx-auto mt-8 max-w-6xl px-4 pb-12 text-slate-500 dark:text-slate-400">
+      <p className="text-xs">© 2026 — Portfolio d'Ethan Gorini.</p>
     </footer>
   );
 }

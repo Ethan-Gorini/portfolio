@@ -140,22 +140,24 @@ function MagneticButton({ children, intent = "secondary", onClick }) {
 
 /* ─────────────────────────────── Compétences (tableau) */
 function Skills() {
-  const headers = [
-    "Gérer le patrimoine informatique",
-    "Répondre aux incidents et aux demandes d’assistance et d’évolution",
-    "Développer la présence en ligne de l’organisation",
-    "Travailler en mode projet",
-    "Mettre à disposition des utilisateurs un service informatique",
-    "Organiser son développement professionnel",
+  const competencies = [
+    { key: "gpi", label: "Gérer le patrimoine informatique" },
+    { key: "incidents", label: "Répondre aux incidents et aux demandes d’assistance et d’évolution" },
+    { key: "presence", label: "Développer la présence en ligne de l’organisation" },
+    { key: "projet", label: "Travailler en mode projet" },
+    { key: "service", label: "Mettre à disposition des utilisateurs un service informatique" },
+    { key: "devpro", label: "Organiser son développement professionnel" },
   ];
 
   const rows = [
+    { type: "group", title: "Réalisations en milieu professionnel en cours de première année" },
     { title: "audit du patrimoine informatique", href: "/portfolio/pdfs/Preuve_1.pdf", gpi: true,  incidents: false, presence: false, projet: false, service: false, devpro: false }, // (1-1)
-    { title: "Prise en charge d'incidents et traitement de demandes d'évolution sur poste de travail", href: "/portfolio/pdfs/Preuve_2.pdf", gpi: false, incidents: true,  presence: false, projet: false, service: false, devpro: false }, // (2-2)
-    { title: "audit et optimisation du maillage interne d’un site", href: "/portfolio/pdfs/Preuve_3.pdf", gpi: false, incidents: false, presence: true,  projet: false, service: false, devpro: false }, // (2-3)
-    { title: "chefferie de projet chez tactee", href: "/portfolio/pdfs/Preuve_4.pdf", gpi: false, incidents: false, presence: false, projet: true,  service: false, devpro: false }, // (3-4)
     { title: "déploiement d’un agent ia vocal", href: "/portfolio/pdfs/Preuve_5.pdf", gpi: false, incidents: false, presence: false, projet: false, service: true,  devpro: false }, // (4-5)
     { title: "créer et organiser son développement professionnel", href: "/portfolio/pdfs/Preuve_6.pdf", gpi: false, incidents: false, presence: false, projet: false, service: false, devpro: true  }, // (5-6)
+    { title: "chefferie de projet chez tactee", href: "/portfolio/pdfs/Preuve_4.pdf", gpi: false, incidents: false, presence: false, projet: true,  service: false, devpro: false }, // (3-4)
+    { title: "audit et optimisation du maillage interne d’un site", href: "/portfolio/pdfs/Preuve_3.pdf", gpi: false, incidents: false, presence: true,  projet: false, service: false, devpro: false }, // (2-3)
+    { type: "group", title: "Réalisations en milieu professionnel en cours de seconde année" },
+    { title: "Prise en charge d'incidents et traitement de demandes d'évolution sur poste de travail", href: "/portfolio/pdfs/Preuve_2.pdf", gpi: false, incidents: true,  presence: false, projet: false, service: false, devpro: false }, // (2-2)
   ];
 
   const Cell = ({ ok }) => (
@@ -176,24 +178,29 @@ function Skills() {
           <thead>
             <tr className="text-left">
               <th className="sticky left-0 z-10 bg-white/90 px-4 py-3 text-slate-700 backdrop-blur dark:bg-slate-900/80 dark:text-slate-200">Réalisation</th>
-              {headers.map((h) => (
-                <th key={h} className="px-3 py-3 font-semibold text-slate-600 dark:text-slate-300">{h}</th>
+              {competencies.map((competency) => (
+                <th key={competency.key} className="px-3 py-3 font-semibold text-slate-600 dark:text-slate-300">{competency.label}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map((r, idx) => (
-              <tr key={idx} className="border-t border-slate-200/70 hover:bg-slate-100/60 dark:border-white/5 dark:hover:bg-white/5">
-                <td className="sticky left-0 z-10 bg-white/90 px-4 py-3 font-medium text-sky-600 underline-offset-2 hover:underline backdrop-blur dark:bg-slate-900/80">
-                  <a href={r.href} target="_blank" rel="noopener noreferrer">{r.title}</a>
-                </td>
-                <Cell ok={r.gpi} />
-                <Cell ok={r.incidents} />
-                <Cell ok={r.presence} />
-                <Cell ok={r.projet} />
-                <Cell ok={r.service} />
-                <Cell ok={r.devpro} />
-              </tr>
+              r.type === "group" ? (
+                <tr key={idx} className="border-t border-slate-200/70 bg-slate-100/90 dark:border-white/10 dark:bg-slate-800/70">
+                  <td colSpan={competencies.length + 1} className="px-4 py-3 text-center text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    {r.title}
+                  </td>
+                </tr>
+              ) : (
+                <tr key={idx} className="border-t border-slate-200/70 hover:bg-slate-100/60 dark:border-white/5 dark:hover:bg-white/5">
+                  <td className="sticky left-0 z-10 bg-white/90 px-4 py-3 font-medium text-sky-600 underline-offset-2 hover:underline backdrop-blur dark:bg-slate-900/80">
+                    <a href={r.href} target="_blank" rel="noopener noreferrer">{r.title}</a>
+                  </td>
+                  {competencies.map((competency) => (
+                    <Cell key={competency.key} ok={r[competency.key]} />
+                  ))}
+                </tr>
+              )
             ))}
           </tbody>
         </table>
